@@ -9,16 +9,6 @@ terraform {
   required_version = ">=1.2.0"
 }
 
-#resource "aws_instance" "app_server" {
-#  ami           = "ami-03aefa83246f44ef2"
-#  instance_type = "t2.micro"
-#
-#  tags = {
-#    Name  = "ExampleAppServerInstance"
-#    Owner = "GeoZavl"
-#  }
-#}
-
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
 
