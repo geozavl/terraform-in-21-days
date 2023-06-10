@@ -18,7 +18,7 @@ data "aws_availability_zones" "available" {
 }
 
 resource "aws_security_group" "public" {
-  name        = "public"
+  name        = "${var.env_code}-public"
   description = "allows public traffic"
   vpc_id      = aws_vpc.main.id
 
@@ -39,7 +39,7 @@ resource "aws_security_group" "public" {
 }
 
 resource "aws_security_group" "private" {
-  name        = "private"
+  name        = "${var.env_code}-private"
   description = "allows local private traffic"
   vpc_id      = aws_vpc.main.id
 
@@ -68,7 +68,7 @@ resource "aws_instance" "public" {
   associate_public_ip_address = true
 
   tags = {
-    Name = "public"
+    Name = "${var.env_code}-public"
   }
 }
 
@@ -80,7 +80,7 @@ resource "aws_instance" "private" {
   key_name               = "AWS1stINSTkey"
 
   tags = {
-    Name = "private"
+    Name = "${var.env_code}-private"
   }
 }
 
