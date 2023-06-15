@@ -27,7 +27,15 @@ resource "aws_security_group" "public" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["178.221.100.11/32"]
+    cidr_blocks = ["212.58.121.139/32"]
+  }
+
+  ingress {
+    description = "WEB from home office"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["212.58.121.139/32"]
   }
 
   egress {
@@ -66,6 +74,7 @@ resource "aws_instance" "public" {
   vpc_security_group_ids      = [aws_security_group.public.id]
   key_name                    = "AWS1stINSTkey"
   associate_public_ip_address = true
+  user_data                   = file("user-data.sh")
 
   tags = {
     Name = "${var.env_code}-public"
