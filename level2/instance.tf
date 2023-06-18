@@ -82,6 +82,7 @@ resource "aws_instance" "public" {
 
 resource "aws_instance" "private" {
   count                  = length(data.terraform_remote_state.level1.outputs.public_subnet_id)
+
   ami                    = data.aws_ami.amazonlinux.id
   instance_type          = "t2.micro"
   subnet_id              = data.terraform_remote_state.level1.outputs.private_subnet_id[count.index]
