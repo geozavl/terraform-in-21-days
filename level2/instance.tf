@@ -80,21 +80,6 @@ resource "aws_instance" "public" {
   }
 }
 
-resource "aws_instance" "private" {
-  count                  = length(data.terraform_remote_state.level1.outputs.public_subnet_id)
-
-  ami                    = data.aws_ami.amazonlinux.id
-  instance_type          = "t2.micro"
-  subnet_id              = data.terraform_remote_state.level1.outputs.private_subnet_id[count.index]
-  vpc_security_group_ids = [aws_security_group.private.id]
-  key_name               = "AWS1stINSTkey"
-  user_data              = file("user-data.sh")
-
-  tags = {
-    Name = "${var.env_code}-private"
-  }
-}
-
 output "public_ip_address" {
   value = aws_instance.public[*].public_ip
 }
