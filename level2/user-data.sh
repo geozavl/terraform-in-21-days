@@ -2,6 +2,5 @@
 
 yum update -y
 yum install -y httpd git
-git clone https://github.com/gabrielecirulli/2048.git
-cp -R 2048/* /var/www/html/
+echo "That is $(hostname)" > /var/www/html/index.html
 systemctl enable --now httpd
