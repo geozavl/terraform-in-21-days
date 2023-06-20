@@ -27,7 +27,7 @@ resource "aws_security_group" "public" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["212.58.121.139/32"]
+    cidr_blocks = ["5.152.77.7/32"]
   }
 
   egress {
@@ -69,11 +69,12 @@ resource "aws_security_group" "private" {
 
 resource "aws_instance" "public" {
   ami                         = data.aws_ami.amazonlinux.id
-  instance_type               = "t2.micro"
+  instance_type               = "t3.micro"
   subnet_id                   = data.terraform_remote_state.level1.outputs.public_subnet_id[0]
   vpc_security_group_ids      = [aws_security_group.public.id]
   key_name                    = "AWS1stINSTkey"
   associate_public_ip_address = true
+  iam_instance_profile        = aws_iam_instance_profile.main.name
 
   tags = {
     Name = "${var.env_code}-public"
