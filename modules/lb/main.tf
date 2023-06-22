@@ -4,9 +4,9 @@ resource "aws_security_group" "load-balancer" {
   vpc_id      = var.vpc_id
 
   ingress {
-    description = "HTTP from the world"
-    from_port   = 80
-    to_port     = 80
+    description = "HTTPS from the world"
+    from_port   = 443
+    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = [var.global_cidr]
   }
@@ -50,8 +50,9 @@ resource "aws_lb" "main" {
 
 resource "aws_lb_listener" "main" {
   load_balancer_arn = aws_lb.main.arn
-  port              = "80"
-  protocol          = "HTTP"
+  port              = "443"
+  protocol          = "HTTPS"
+  certificate_arn   = aws_acm_certificate.main.arn
 
   default_action {
     type             = "forward"
